@@ -94,10 +94,11 @@ function BeatBuzzer(beatSystem, $elem, key, frequency) {
   var audioManager = new SimpleAudioManager()
   var vibrator = new Vibrator()
 
+  /* debug
   $elem.on('click', function() { 
     beatSystem.down(key)
     setTimeout(function() { beatSystem.release(key) }, 200)
-  })
+  })*/
 
   $elem.on('touchstart', function() { beatSystem.down(key) })
   $elem.on('touchend', function() { beatSystem.release(key) })
