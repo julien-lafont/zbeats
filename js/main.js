@@ -14,6 +14,7 @@ var app = (function() {
   return {
     init: function() {
       init()
+      $("#debug").append("init OK")
     }
   }
 }());
