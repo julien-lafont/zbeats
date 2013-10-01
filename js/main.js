@@ -98,6 +98,9 @@ function BeatBuzzer(beatSystem, $elem, key, frequency) {
     setTimeout(function() { beatSystem.release(key) }, 200)
   })
 
+  $elem.on('touchstart', function() { beatSystem.down(key) })
+  $elem.on('touchend', function() { beatSystem.release(key) })
+
   $(document)
     .on('keydown', null, key, function() { beatSystem.down(key) })
     .on('keyup', null, key, function() { beatSystem.release(key) })
