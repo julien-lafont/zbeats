@@ -78,10 +78,13 @@ function BeatSystem() {
 
 function Metronome() {
   var audioManager = new SimpleAudioManager()
-  audioManager.setFrequency(220)
-  setInterval(function() {
+  var tick = 0;
+  var metronomeInterv = setInterval(function() {
+    audioManager.setFrequency((tick%4 == 0) ? 280 : 220)
     audioManager.play()
     setTimeout(function() { audioManager.stop()}, 200)
+    tick ++
+    if (tick == 8) clear(metronomeInterv)
   }, 400)
 }
 
@@ -101,12 +104,15 @@ function BeatBuzzer(beatSystem, $elem, key, frequency) {
 
   return {
     start: function() {
+      $("#debug").append("start")
       audioManager.setFrequency(frequency)
       audioManager.play()
       $elem.addClass("active")
       vibrator.vibrate()
+      $("#debug").append("/<br />")
     },
     stop: function() {
+      $("#debug").append("stop")
       audioManager.stop()
       $elem.removeClass("active")
     },
