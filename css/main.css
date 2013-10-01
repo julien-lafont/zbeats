@@ -6,8 +6,13 @@ body {
 }
 
 .beat {
-    width: 100px;
-    height: 100px;
+    height: 200px;
     display: flex;
-     flex: 1;
+    flex: 1;
+    padding: 20px;
+}
+
+.beat.active {
+    border: 20px solid yellow;
+    padding: 0;
 }
