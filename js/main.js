@@ -1,8 +1,9 @@
+var ctx = new (window.AudioContext || window.webkitAudioContext)();
+
 var app = (function() {
 
   var beatSystem = new BeatSystem()
-  var ctx = new (window.AudioContext || window.webkitAudioContext)();
-
+  
   var init = function() {
     $(".beat").each(function() {
       var $this = $(this)
@@ -22,13 +23,12 @@ var app = (function() {
 
 function SimpleAudioManager() {
 
-
-  var vco = app.ctx.createOscillator();
+  var vco = ctx.createOscillator();
   vco.type = vco.SINE;
   vco.frequency.value = this.frequency;
   vco.start(0);
 
-  var vca = app.ctx.createGain();
+  var vca = ctx.createGain();
   vca.gain.value = 0;
 
   vco.connect(vca);
