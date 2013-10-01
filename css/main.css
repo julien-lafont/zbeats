@@ -1,0 +1,13 @@
+body {
+    height: 100%;
+    margin: 10em;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.beat {
+    width: 100px;
+    height: 100px;
+    display: flex;
+     flex: 1;
+}
