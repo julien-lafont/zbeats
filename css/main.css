@@ -1,6 +1,11 @@
 body {
     height: 100%;
     margin: 10em;
+    
+    
+}
+
+.beats {
     display: flex;
     flex-flow: row wrap;
 }
@@ -15,4 +20,8 @@ body {
 .beat.active {
     border: 20px solid yellow;
     padding: 0;
+}
+
+#debug {
+    
 }

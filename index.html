@@ -12,15 +12,23 @@
     </head>
     <body>
 
-        <div class="beat" data-key="a" data-frequency="440" style="background-color: green">A</div>
-        <div class="beat" data-key="z" data-frequency="480" style="background-color: blue">Z</div>
-        <div class="beat" data-key="e" data-frequency="520" style="background-color: red">E</div>
+        <div id="record">
+        </div>
 
+        <div class="beats">
+            <div class="beat" data-key="a" data-frequency="440" style="background-color: green">A</div>
+            <div class="beat" data-key="z" data-frequency="480" style="background-color: blue">Z</div>
+            <div class="beat" data-key="e" data-frequency="520" style="background-color: red">E</div>
+        </div>
 
-        <div id="debug">v2</div>
+        <button id="record-start">Record START</button>
+        <button id="record-stop">Record STOP</button>
+        <button id="replay">Replay</button>
+        <button id="try">Try</button>
 
         <script src="js/vendor/jquery-1.10.1.min.js"></script>
         <script src="js/vendor/jquery.hotkeys.js"></script>
+        <script src="https://rawgithub.com/lodash/lodash/2.2.0/dist/lodash.min.js"></script>
         <script src="js/main.js"></script>
     </body>
 </html>
