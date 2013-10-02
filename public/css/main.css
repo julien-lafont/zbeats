@@ -43,6 +43,10 @@ body {
     background-color: #FF2300;
     border-color: #A61700
 }
+.beat.r {
+    background-color: #00AE68;
+    border-color: #007143
+}
 .beat.a.active {
     border-color: #61B7CF;
 }
@@ -51,6 +55,9 @@ body {
 }
 .beat.e.active {
     border-color: #FF8673;
+}
+.beat.r.active {
+    border-color: #60D6A7;
 }
 
 .buttons {
