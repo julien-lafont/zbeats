@@ -1,0 +1,19 @@
+@(roomId: String, id: String)(implicit req: RequestHeader)
+
+@main {
+<p>Welcome in room @roomId</p>
+
+@if(id == "creator") {
+    <div id="first">
+        <p>Invite your friend to join you with this URL : <br />
+            <input type="text" value="@routes.Application.join(roomId).absoluteURL()" style="width: 300px" />
+        </p>
+
+        <p>Or Scan <br />
+            <img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=@routes.Application.join(roomId).absoluteURL()" />
+        </p>
+    </div>
+    }
+
+    <script type="text/javascript" charset="utf-8" src="@routes.Application.websocketJs(roomId, id)"></script>
+}

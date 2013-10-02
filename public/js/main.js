@@ -13,10 +13,10 @@ var app = (function() {
   
   var init = function() {
     $(".beat").each(function() {
-      var $this = $(this)
-      var key = $this.data("key")
-      var frequency = $this.data("frequency")
-      beatSystem.register(key, new BeatBuzzer(beatSystem, $this, key, frequency));
+      var $elem = $(this)
+      var key = $elem.data("key")
+      var frequency = $elem.data("frequency")
+      beatSystem.register(key, new BeatBuzzer(beatSystem, $elem, key, frequency));
     })
 
     // TEST

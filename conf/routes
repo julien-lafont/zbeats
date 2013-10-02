@@ -1,0 +1,17 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET        /                                       controllers.Application.index
+
+GET        /create                                 controllers.Application.create()
+GET        /join/:id                               controllers.Application.join(id: String)
+#GET        /room/:id                               controllers.Application.room(id: String)
+
+GET        /websocket                              controllers.Application.websocket(roomId: String, id: String)
+GET        /assets/javascripts/websocket.js        controllers.Application.websocketJs(roomid: String, id: String)
+
+# Map static resources from the /public folder to the /assets URL path
+#GET     /assets/*file               controllers.Assets.at(path="/zbeats", file)
+GET        /assets/*file                           controllers.Assets.at(path="/public", file)

@@ -1,0 +1,65 @@
+body {
+    height: 100%;
+}
+
+.beats {
+    display: inline-block;
+    text-align: center;
+    margin: 20px 0;
+    width: 100%
+}
+
+.beat {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    line-height: 100px;
+    font-size: 72px;
+    font-weight : bold;
+    border-radius: 100px;
+    border: 5px solid #000;
+    color: rgba(255, 255, 255, 0.5);
+
+}
+
+.beat.active {
+    border-width: 10px;
+    padding: 5px;
+
+}
+
+.beat.a {
+    background-color: #057D9F;
+    border-color: #025167
+}
+.beat.z {
+    background-color: #FFB300;
+    border-color: #A67400
+}
+.beat.e {
+    background-color: #FF2300;
+    border-color: #A61700
+}
+.beat.a.active {
+    border-color: #61B7CF;
+}
+.beat.z.active {
+    border-color: #FFD573;
+}
+.beat.e.active {
+    border-color: #FF8673;
+}
+
+.buttons {
+    text-align: center
+}
+
+.help {
+    font-family: arial;
+    font-size: 13px;
+    margin: 0 20px
+}
+
