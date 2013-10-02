@@ -19,18 +19,36 @@ var app = (function() {
       beatSystem.register(key, new BeatBuzzer(beatSystem, $elem, key, frequency));
     })
 
-    // TEST
+    // ------- TEST -----------
     $("#replay").on("click", function() {
       beatSystem.replay()
     })
+
     $("#record-start").on('click', function() {
       beatSystem.startRecord();
+      $("#record-stop").show()
+      $("#record-start").hide()
+      $("#try").hide()
+      $("#replay").hide()
     })
+
     $("#record-stop").on('click', function() {
       beatSystem.stopRecord();
+      $("#record-stop").hide()
+      $("#try").show()
+      $("#replay").show()
     })
+
     $("#try").on('click', function() {
       beatSystem.launchGame();
+    })
+
+    E.sub("startgame", function() {
+      $("#replay").hide()
+      $("#try").hide()
+    })
+    E.sub("endgame", function() {
+      $("#record-start").show()
     })
   }
 

@@ -49,6 +49,7 @@ function BeatSystem() {
     var nbBeats = sequenceTemoin.length
     alert("You have to play " + nbBeats + " beats")
 
+    E.pub("startgame")
     recorder.reset()
     recorder.on()
 
@@ -57,6 +58,7 @@ function BeatSystem() {
         recorder.off()
         var score = new Scoring(sequenceTemoin, recorder.export())
         alert("Score : " + score.level + "\nRéussite : " + score.percent+"%\nLag : " + score.time + "s");
+        E.pub("endgame")
       }
     })
   }
