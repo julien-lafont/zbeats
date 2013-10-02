@@ -1,24 +1,26 @@
 function BeatSystem() {
 
   var buzzers = {}
-  var activeKey = null
+  var activeBuzzer = null
   var recorder = new Recorder()
   var replayer = new Replayer(buzzers)
   var mustRecord = false
   var sequenceTemoin = null
 
   var down = function(key) {
-    if (activeKey == key) return;
-    if (activeKey && activeKey != key) {
-        release(activeKey)
+    if (activeBuzzer && activeBuzzer.key == key) return;
+    if (activeBuzzer && activeBuzzer.key != key) {
+        release(activeBuzzer.key)
     }
-    activeKey = key
+    activeBuzzer = buzzers[key]
+    activeBuzzer.start()
     E.pub("down", [key])
   }
 
   var release = function(key) {
-    if (activeKey) {
-      activeKey = null
+    if (activeBuzzer) {
+      activeBuzzer.stop()
+      activeBuzzer = null
       E.pub("release", [key])
     }
   }
