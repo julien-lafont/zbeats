@@ -4,11 +4,11 @@ function Recorder(beatSystem) {
   var lastRecord = null
   var enabled = false
 
-  E.sub("down", function(key) {
-    down(key)
+  E.sub("down", function(args) {
+    down(args[0])
   })
 
-  E.sub("release", function(key) {
+  E.sub("release", function(azrgs) {
     release()
   })
 

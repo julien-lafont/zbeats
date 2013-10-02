@@ -55,8 +55,8 @@ function BeatSystem() {
     E.sub("release", function(key) {
       if (--nbBeats == 0) {
         recorder.off()
-        var scoring = new Scoring(sequenceTemoin, recorder.export())
-        alert("Score : " + scoring.level + " (différence: " + scoring.time + "s)");
+        var score = new Scoring(sequenceTemoin, recorder.export())
+        alert("Score : " + score.level + "\nRéussite : " + score.percent+"%\nLag : " + score.time + "s");
       }
     })
   }
@@ -86,8 +86,8 @@ function BeatBuzzer(beatSystem, $elem, key, frequency) {
     .on('keydown', null, key, function() { beatSystem.down(key) })
     .on('keyup', null, key, function() { beatSystem.release(key) })
 
-  E.sub("down", function(ekey) { if (ekey == key) start() })
-  E.sub("release", function(ekey) { if (ekey == key) stop() })
+  E.sub("down", function(args) { if (args[0] == key) start() })
+  E.sub("release", function(args) { if (args[0] == key) stop() })
 
   var start = function() {
     audioManager.setFrequency(frequency)
