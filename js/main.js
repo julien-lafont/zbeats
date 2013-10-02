@@ -1,5 +1,8 @@
 var ctx = new (window.AudioContext || window.webkitAudioContext)();
 
+// pub/sub system
+var E = (function(_){return{pub:function(a,b,c,d){for(d=-1,c=[].concat(_[a]);c[++d];)c[d](b)},sub:function(a,b){(_[a]||(_[a]=[])).push(b)}}})({});
+
 var config = {
   volume: 0.05
 }
@@ -16,14 +19,15 @@ var app = (function() {
       beatSystem.register(key, new BeatBuzzer(beatSystem, $this, key, frequency));
     })
 
+    // TEST
     $("#replay").on("click", function() {
       beatSystem.replay()
     })
     $("#record-start").on('click', function() {
-      beatSystem.toggleRecord(true);
+      beatSystem.startRecord();
     })
     $("#record-stop").on('click', function() {
-      beatSystem.toggleRecord(false);
+      beatSystem.stopRecord();
     })
     $("#try").on('click', function() {
       beatSystem.launchGame();
@@ -31,185 +35,15 @@ var app = (function() {
   }
 
   return {
-    init: function() {
-      init()
-      $("#debug").append("init OK")
-    }
+    init: init
   }
 }());
 
-function SimpleAudioManager() {
-
-  var vco = ctx.createOscillator();
-  vco.type = vco.SINE;
-  vco.frequency.value = this.frequency;
-  vco.start(0);
-
-  var vca = ctx.createGain();
-  vca.gain.value = 0;
-
-  vco.connect(vca);
-  vca.connect(ctx.destination);
-
-  return {
-    setFrequency: function(frequency) {
-      vco.frequency.value = frequency
-    },
-    play: function() {
-      vca.gain.value = config.volume;
-    },
-    stop: function() {
-      vca.gain.value = 0;
-    }
-  }
-
-}
-
-function BeatSystem() {
-
-  var buzzers = {}
-  var activeBuzzer = null
-  var recorder = new Recorder()
-  var replayer = new Replayer(buzzers)
-  var mustRecord = false
-  var sequenceTemoin = null
-
-  var down = function(key) {
-    if (activeBuzzer && activeBuzzer.key == key) return;
-    if (activeBuzzer && activeBuzzer.key != key) {
-        release(activeBuzzer.key)
-    }
-    activeBuzzer = buzzers[key]
-    activeBuzzer.start()
-    if (mustRecord) recorder.down(key)
-  }
-
-  var release = function(key) {
-    if (activeBuzzer) {
-      activeBuzzer.stop()
-      activeBuzzer = null
-      if (mustRecord) recorder.release(key)
-    }
-  }
-
-  var replay = function() {
-    var seq = recorder.export()
-    replayer.run(seq)
-  }
-
-  var toggleRecord = function(state) {
-    mustRecord = state;
-    if (!state) {
-      sequenceTemoin = recorder.export()
-    }
-  }
-
-  var launchGame = function() {
-    if (!sequenceTemoin) {
-      alert("Record the rythm before playing !")
-      return;
-    }
-    alert("You have to play " + sequenceTemoin.length + " beats")
-    mustRecord = true
-  }
-
-  return {
-    register: function(key, beat) {
-      buzzers[key] = beat
-    },
-    down: down,
-    release: release,
-    replay: replay,
-    toggleRecord: toggleRecord,
-    launchGame: launchGame
-  }
-
-}
-
-function BeatBuzzer(beatSystem, $elem, key, frequency) {
-
-  var audioManager = new SimpleAudioManager()
-
-  $elem.on('touchstart', function() { beatSystem.down(key) })
-  $elem.on('touchend touchcancel', function() { beatSystem.release(key) })
-
-  $(document)
-    .on('keydown', null, key, function() { beatSystem.down(key) })
-    .on('keyup', null, key, function() { beatSystem.release(key) })
-
-  return {
-    start: function() {
-      $("#debug").append("start<br />")
-      audioManager.setFrequency(frequency)
-      audioManager.play()
-      $elem.addClass("active")
-    },
-    stop: function() {
-      $("#debug").append("start<br />")
-      $("#debug").append("stop")
-      audioManager.stop()
-      $elem.removeClass("active")
-    },
-    key: key
-  }
-}
-
-function Recorder(beatSystem) {
-  var lastTime = null
-  var records = []
-  var lastRecord = null
-
-  return {
-    down: function(key) {
-      if (!lastTime) lastTime = ctx.currentTime
-      var rec = { key: key, wait: ctx.currentTime - lastTime, duration: -1 }
-      lastTime = ctx.currentTime
-      records.push(rec)
-      lastRecord = rec
-    },
-    release: function() {
-      if (lastRecord) lastRecord.duration = ctx.currentTime - lastTime
-      lastTime = ctx.currentTime
-      console.log(records)
-    },
-    export: function() {
-      return records
-    },
-    reset: function() {
-      firstTime = null;
-      records = []
-      lastRecord = null
-    }
-  }
-}
-
-function Replayer(buzzers) {
-
-  var run = function(seq) {
-    if (!seq.length) return;
-    var head = _.head(seq)
-    var tail = _.tail(seq)
-    setTimeout(function() {
-      var beat = buzzers[head.key]
-      beat.start()
-      setTimeout(function() {
-        beat.stop()
-        run(tail)
-      }, head.duration * 1000)
-    }, head.wait * 1000)
-  }
-
-  return {
-    run: run
-  }
-}
 
 $(function() {
   app.init()
 })
 
-
-var E = (function(_){return{pub:function(a,b,c,d){for(d=-1,c=[].concat(_[a]);c[++d];)c[d](b)},sub:function(a,b){(_[a]||(_[a]=[])).push(b)}}})({});
 
 /*
 
