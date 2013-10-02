@@ -4,7 +4,7 @@ var ctx = new (window.AudioContext || window.webkitAudioContext)();
 var E = (function(_){return{pub:function(a,b,c,d){for(d=-1,c=[].concat(_[a]);c[++d];)c[d](b)},sub:function(a,b){(_[a]||(_[a]=[])).push(b)}}})({});
 
 var config = {
-  volume: 0.05
+  volume: 1
 }
 
 var app = (function() {
